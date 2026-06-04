@@ -24,7 +24,7 @@
 | `images/inverted_pendulum.JPG` | 倒立振子ロボット | ✅ |
 | `images/linetrace.jpeg` | ライントレースロボット | ✅ |
 | `images/robotrace.jpeg` | ロボトレース | ✅ |
-| `images/ssl.jpg` | Ri-one SSL ロボット | ⬜ 未配置 |
+| `images/ssl.jpeg` | Ri-one SSL ロボット | ✅ |
 | `images/disinfectant_stand.jpeg` | 足踏み式消毒液スタンド | ✅ |
 
 > `images/rcj_lightweight.JPG`（RCJ軽量級ロボ）は現状サイト未使用。
