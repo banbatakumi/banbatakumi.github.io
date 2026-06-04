@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>馬場 拓海 / Takumi Bamba — Robotics Engineer</title>
+  <meta name="description" content="立命館大学ロボティクス学科の学生エンジニア、馬場拓海（Takumi Bamba）のポートフォリオ。回路設計から自律走行ソフトウェアまで一貫して自作するロボティクスエンジニア。" />
+  <meta name="author" content="Takumi Bamba" />
+
+  <!-- OGP -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="馬場 拓海 / Takumi Bamba — Robotics Engineer" />
+  <meta property="og:description" content="Building robots from scratch — from PCB design to autonomous software." />
+  <meta property="og:url" content="https://banbatakumi.github.io/" />
+  <meta property="og:image" content="https://banbatakumi.github.io/images/surge.jpg" />
+  <meta property="og:site_name" content="Takumi Bamba Portfolio" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="馬場 拓海 / Takumi Bamba — Robotics Engineer" />
+  <meta name="twitter:description" content="Building robots from scratch — from PCB design to autonomous software." />
+  <meta name="twitter:image" content="https://banbatakumi.github.io/images/surge.jpg" />
+
+  <!-- Favicon (絵文字) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --accent: #2563eb;
+      --accent-dark: #1d4ed8;
+      --accent-light: #dbeafe;
+      --bg: #ffffff;
+      --bg-soft: #f8fafc;
+      --bg-card: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 8px 24px rgba(15, 23, 42, 0.06);
+      --shadow-hover: 0 4px 12px rgba(37, 99, 235, 0.12), 0 16px 40px rgba(37, 99, 235, 0.14);
+      --radius: 16px;
+      --max-width: 1080px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+    body {
+      font-family: "Inter", "Noto Sans JP", system-ui, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section { padding: 96px 0; }
+
+    .mono { font-family: "JetBrains Mono", monospace; }
+
+    /* ===== Navbar ===== */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: saturate(180%) blur(12px);
+      -webkit-backdrop-filter: saturate(180%) blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    header.scrolled {
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 12px rgba(15, 23, 42, 0.04);
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+    .nav-logo {
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-logo .dot { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+    .nav-links a {
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); background: var(--accent-light); }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    /* ===== Hero ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: 68px;
+      background:
+        radial-gradient(60% 50% at 80% 10%, rgba(37, 99, 235, 0.08), transparent 70%),
+        radial-gradient(50% 50% at 10% 80%, rgba(37, 99, 235, 0.06), transparent 70%);
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 75%);
+      opacity: 0.5;
+      z-index: 0;
+    }
+    .hero .container { position: relative; z-index: 1; }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--accent-light);
+      color: var(--accent-dark);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 28px;
+    }
+    .hero-badge .pulse {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.5);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.5); }
+      70% { box-shadow: 0 0 0 10px rgba(37, 99, 235, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 8px;
+    }
+    .hero h1 .en {
+      display: block;
+      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-top: 12px;
+      letter-spacing: 0.01em;
+    }
+    .hero .role {
+      font-size: clamp(1.05rem, 2.5vw, 1.3rem);
+      font-weight: 600;
+      color: var(--accent);
+      margin: 24px 0 16px;
+    }
+    .hero .tagline {
+      font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+      color: var(--text-muted);
+      max-width: 620px;
+      font-weight: 500;
+    }
+    .hero .tagline .mono { color: var(--text); }
+    .hero-cta {
+      display: flex;
+      gap: 14px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 26px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.98rem;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+    }
+    .btn-primary:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 8px 22px rgba(37, 99, 235, 0.38); }
+    .btn-ghost {
+      background: #fff;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+    /* ===== Section heading ===== */
+    .section-head { margin-bottom: 56px; }
+    .section-label {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+    .section-label::before { content: "// "; opacity: 0.6; }
+    .section-title {
+      font-size: clamp(1.9rem, 4vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    /* ===== About ===== */
+    .about { background: var(--bg-soft); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .about-lead {
+      font-size: 1.15rem;
+      color: var(--text);
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+    .about-grid p { color: var(--text-muted); margin-bottom: 16px; }
+    .about-grid p strong { color: var(--text); font-weight: 700; }
+    .about-facts {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .fact {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    }
+    .fact:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--accent); }
+    .fact .k {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.78rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+    .fact .v { font-weight: 700; font-size: 1.02rem; }
+
+    /* ===== Projects ===== */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      gap: 28px;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+      border-color: rgba(37, 99, 235, 0.4);
+    }
+    .card-img {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      background: linear-gradient(135deg, #eef2f7, #e2e8f0);
+      overflow: hidden;
+    }
+    .card-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s;
+    }
+    .card:hover .card-img img { transform: scale(1.05); }
+    /* プレースホルダー: imgが読み込めない時に背景の文字が見える */
+    .card-img::after {
+      content: attr(data-placeholder);
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      z-index: 0;
+    }
+    .card-img img { position: relative; z-index: 1; }
+    .card-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 2px;
+    }
+    .card-title-en {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .card-desc {
+      color: var(--text-muted);
+      font-size: 0.94rem;
+      margin-bottom: 18px;
+      flex: 1;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; }
+    .tag {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.72rem;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: var(--bg-soft);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .card:hover .tag { border-color: var(--accent-light); }
+    .tag:hover { background: var(--accent-light); color: var(--accent-dark); border-color: var(--accent); }
+
+    /* ===== Awards ===== */
+    .awards { background: var(--bg-soft); }
+    .timeline {
+      position: relative;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 70px;
+      top: 8px; bottom: 8px;
+      width: 2px;
+      background: linear-gradient(var(--accent), var(--accent-light));
+    }
+    .award {
+      position: relative;
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 36px;
+      padding: 16px 0;
+      align-items: center;
+    }
+    .award-year {
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-align: right;
+      font-size: 0.95rem;
+    }
+    .award-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 22px;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    }
+    .award-card::before {
+      content: "";
+      position: absolute;
+      left: -29px; top: 50%;
+      transform: translateY(-50%);
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 2px var(--accent-light);
+    }
+    .award-card:hover { transform: translateX(4px); box-shadow: var(--shadow); border-color: var(--accent); }
+    .award-name { font-weight: 700; font-size: 1.02rem; margin-bottom: 4px; }
+    .award-result {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--accent-dark);
+    }
+    .award-result.gold { color: #b45309; }
+
+    /* ===== Skills ===== */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .skill-group {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    }
+    .skill-group:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: rgba(37, 99, 235, 0.4); }
+    .skill-group h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .skill-group h3 .ico {
+      width: 36px; height: 36px;
+      display: grid; place-items: center;
+      border-radius: 9px;
+      background: var(--accent-light);
+      font-size: 1.1rem;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .skill-tags .tag { font-size: 0.78rem; padding: 6px 12px; }
+
+    /* ===== Contact ===== */
+    .contact { text-align: center; }
+    .contact .section-head { margin-bottom: 40px; }
+    .contact-sub {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 540px;
+      margin: 0 auto 40px;
+    }
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .contact-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 26px 34px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg-card);
+      min-width: 160px;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+    .contact-link:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--accent);
+    }
+    .contact-link .ico {
+      width: 48px; height: 48px;
+      display: grid; place-items: center;
+      border-radius: 12px;
+      background: var(--accent-light);
+      font-size: 1.5rem;
+    }
+    .contact-link .label { font-weight: 700; }
+    .contact-link .handle {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    /* ===== Footer ===== */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 36px 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    footer .mono { color: var(--text); }
+
+    /* ===== Scroll reveal ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal[data-delay="1"] { transition-delay: 0.08s; }
+    .reveal[data-delay="2"] { transition-delay: 0.16s; }
+    .reveal[data-delay="3"] { transition-delay: 0.24s; }
+    .reveal[data-delay="4"] { transition-delay: 0.32s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .hero-badge .pulse { animation: none; }
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 768px) {
+      section { padding: 72px 0; }
+      .nav-links {
+        position: fixed;
+        top: 68px; left: 0; right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
+        background: rgba(255, 255, 255, 0.97);
+        backdrop-filter: blur(12px);
+        padding: 16px 24px 24px;
+        border-bottom: 1px solid var(--border);
+        transform: translateY(-130%);
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+      }
+      .nav-links.open { transform: translateY(0); }
+      .nav-links a { padding: 12px 14px; font-size: 1rem; }
+      .nav-toggle { display: flex; }
+      .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      .nav-toggle.open span:nth-child(2) { opacity: 0; }
+      .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+      .about-grid { grid-template-columns: 1fr; gap: 32px; }
+      .timeline::before { left: 52px; }
+      .award { grid-template-columns: 40px 1fr; gap: 28px; }
+      .award-year { font-size: 0.85rem; }
+      .hero-cta { width: 100%; }
+      .btn { flex: 1; justify-content: center; }
+    }
+
+    @media (max-width: 420px) {
+      .container { padding: 0 18px; }
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== Navbar ===== -->
+  <header id="header">
+    <div class="container nav">
+      <a href="#hero" class="nav-logo">🤖 Takumi Bamba<span class="dot">.</span></a>
+      <nav class="nav-links" id="navLinks">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#awards">Awards</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <div class="hero-badge reveal"><span class="pulse"></span>Robotics Engineer / Student</div>
+      <h1 class="reveal" data-delay="1">
+        馬場 拓海
+        <span class="en">Takumi Bamba</span>
+      </h1>
+      <p class="role reveal" data-delay="2">Robotics Engineer / Student at Ritsumeikan University</p>
+      <p class="tagline reveal" data-delay="3">
+        Building robots from scratch — from <span class="mono">PCB design</span> to <span class="mono">autonomous software</span>.
+      </p>
+      <div class="hero-cta reveal" data-delay="4">
+        <a href="#projects" class="btn btn-primary">プロジェクトを見る →</a>
+        <a href="#contact" class="btn btn-ghost">Contact</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== About ===== -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-label">About</div>
+        <h2 class="section-title">ハードからソフトまで、一貫して自作する</h2>
+      </div>
+      <div class="about-grid">
+        <div class="reveal">
+          <p class="about-lead">
+            中学からロボット競技を始め、回路設計・基板製作・CAD・組み込みファームウェア・上位ソフトウェアまでを一人で設計・実装してきました。
+          </p>
+          <p>
+            現在は<strong>立命館大学 ロボティクス学科 3回生（BKC）</strong>に在籍。ロボットサークル<strong>Ri-one</strong>に所属し、<strong>RoboCup SSL（Small Size League）</strong>競技のロボット開発に取り組んでいます。
+          </p>
+          <p>
+            「動くものを最後まで自分の手で作りきる」ことを大切にし、KiCadでの回路設計からSTM32ベアメタル、Pythonの上位システムまで横断的に開発します。将来は<strong>自動車産業でのR&D・組み込み系エンジニア</strong>を志望しています。
+          </p>
+        </div>
+        <div class="about-facts">
+          <div class="fact reveal" data-delay="1">
+            <div class="k">University</div>
+            <div class="v">立命館大学 ロボティクス学科 3回生</div>
+          </div>
+          <div class="fact reveal" data-delay="2">
+            <div class="k">Circle</div>
+            <div class="v">Ri-one — RoboCup SSL</div>
+          </div>
+          <div class="fact reveal" data-delay="3">
+            <div class="k">Focus</div>
+            <div class="v">Hardware × Embedded × Software</div>
+          </div>
+          <div class="fact reveal" data-delay="4">
+            <div class="k">Goal</div>
+            <div class="v">自動車R&D / 組み込みエンジニア</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Projects ===== -->
+  <section class="projects" id="projects">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-label">Projects</div>
+        <h2 class="section-title">制作物</h2>
+      </div>
+      <div class="projects-grid">
+
+        <article class="card reveal">
+          <div class="card-img" data-placeholder="images/surge.jpg">
+            <img src="images/surge.jpg" alt="SURGE Mark.1 自律走行ロボットカー" loading="lazy" onerror="this.style.display='none'" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">SURGE Mark.1</h3>
+            <div class="card-title-en">Autonomous Robot Car</div>
+            <p class="card-desc">
+              自作自律走行ロボットカー。回路設計（KiCad）・車体CAD（Autodesk Fusion）・組み込みファームウェア（STM32ベアメタル）・上位システム（Raspberry Pi + FastAPI + WebSocket）をすべて一人で設計・実装。ブラウザから操作できるコックピットUIも自作。
+            </p>
+            <div class="tags">
+              <span class="tag">STM32</span><span class="tag">Raspberry Pi</span><span class="tag">KiCad</span>
+              <span class="tag">FastAPI</span><span class="tag">LiDAR</span><span class="tag">Python</span>
+              <span class="tag">C/C++</span><span class="tag">Autodesk Fusion</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal" data-delay="1">
+          <div class="card-img" data-placeholder="images/rcj_2024.jpg">
+            <img src="images/rcj_2024.jpg" alt="RoboCup Junior Soccer ロボット" loading="lazy" onerror="this.style.display='none'" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">RoboCup Junior Soccer ロボット</h3>
+            <div class="card-title-en">Soccer Robots (2018–)</div>
+            <p class="card-desc">
+              中学から大学まで継続的に開発。3輪オムニ・メカナムホイール構成の自律サッカーロボットを複数世代にわたって設計・製作。2024年度世界大会優勝。
+            </p>
+            <div class="tags">
+              <span class="tag">STM32</span><span class="tag">3D Print</span><span class="tag">KiCad</span>
+              <span class="tag">C/C++</span><span class="tag">Omni Wheel</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal" data-delay="2">
+          <div class="card-img" data-placeholder="images/bldc.jpg">
+            <img src="images/bldc.jpg" alt="自作BLDCホイールモジュール" loading="lazy" onerror="this.style.display='none'" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">自作BLDCホイールモジュール</h3>
+            <div class="card-title-en">In-house BLDC Wheel Module</div>
+            <p class="card-desc">
+              AS5600磁気角度センサーを用いた正弦波駆動のBLDC ESCを自作。モーターとESCを一体化したコンパクトなホイールモジュールとして設計。
+            </p>
+            <div class="tags">
+              <span class="tag">BLDC</span><span class="tag">AS5600</span><span class="tag">KiCad</span>
+              <span class="tag">C/C++</span><span class="tag">Motor Control</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal" data-delay="3">
+          <div class="card-img" data-placeholder="images/ssl.jpg">
+            <img src="images/ssl.jpg" alt="Ri-one SSL ロボット" loading="lazy" onerror="this.style.display='none'" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Ri-one SSL ロボット</h3>
+            <div class="card-title-en">RoboCup Small Size League</div>
+            <p class="card-desc">
+              RoboCup Small Size League（SSL）競技ロボットの開発に参加。サークル内でのハードウェア設計・製作・ワークショップ運営も担当。
+            </p>
+            <div class="tags">
+              <span class="tag">RoboCup SSL</span><span class="tag">Ri-one</span><span class="tag">Hardware Design</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal" data-delay="4">
+          <div class="card-img" data-placeholder="images/sanitizer.jpg">
+            <img src="images/sanitizer.jpg" alt="足踏み式消毒液スタンド" loading="lazy" onerror="this.style.display='none'" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">足踏み式消毒液スタンド</h3>
+            <div class="card-title-en">Foot-pedal Sanitizer Stand (Donated)</div>
+            <p class="card-desc">
+              中学3年時、COVID-19対応として足踏み式消毒液スタンドを自作し、草津市および通っていた学校に寄付。
+            </p>
+            <div class="tags">
+              <span class="tag">木工</span><span class="tag">自作</span><span class="tag">社会貢献</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Awards ===== -->
+  <section class="awards" id="awards">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-label">Awards</div>
+        <h2 class="section-title">受賞歴</h2>
+      </div>
+      <div class="timeline">
+
+        <div class="award reveal">
+          <div class="award-year">2025</div>
+          <div class="award-card">
+            <div class="award-name">MAGP（ミニカー自動運転グランプリ）Openクラス</div>
+            <div class="award-result gold">🥇 優勝</div>
+          </div>
+        </div>
+
+        <div class="award reveal" data-delay="1">
+          <div class="award-year">2024</div>
+          <div class="award-card">
+            <div class="award-name">RoboCup Junior Soccer Open — 世界大会</div>
+            <div class="award-result gold">🥇 優勝</div>
+          </div>
+        </div>
+
+        <div class="award reveal" data-delay="2">
+          <div class="award-year">2024</div>
+          <div class="award-card">
+            <div class="award-name">RoboCup Junior Soccer Open — 日本大会</div>
+            <div class="award-result gold">🥇 優勝</div>
+          </div>
+        </div>
+
+        <div class="award reveal" data-delay="3">
+          <div class="award-year">2023</div>
+          <div class="award-card">
+            <div class="award-name">RoboCup Junior Soccer Lightweight — 日本大会</div>
+            <div class="award-result">🏅 6位</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Skills ===== -->
+  <section class="skills" id="skills">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-label">Skills</div>
+        <h2 class="section-title">技術スタック</h2>
+      </div>
+      <div class="skills-grid">
+
+        <div class="skill-group reveal">
+          <h3><span class="ico">🔧</span>Hardware</h3>
+          <div class="skill-tags">
+            <span class="tag">回路設計 (KiCad)</span>
+            <span class="tag">PCBルーティング</span>
+            <span class="tag">BLDC / モーター制御</span>
+            <span class="tag">STM32 (ベアメタル)</span>
+            <span class="tag">LiDAR (LD06)</span>
+            <span class="tag">Autodesk Fusion</span>
+            <span class="tag">3Dプリント</span>
+          </div>
+        </div>
+
+        <div class="skill-group reveal" data-delay="1">
+          <h3><span class="ico">💻</span>Software</h3>
+          <div class="skill-tags">
+            <span class="tag">C / C++</span>
+            <span class="tag">Python</span>
+            <span class="tag">MATLAB / Simulink</span>
+            <span class="tag">FastAPI</span>
+            <span class="tag">WebSocket / MJPEG</span>
+            <span class="tag">ROS2 (学習中)</span>
+          </div>
+        </div>
+
+        <div class="skill-group reveal" data-delay="2">
+          <h3><span class="ico">🛠️</span>Tools</h3>
+          <div class="skill-tags">
+            <span class="tag">Git / GitHub</span>
+            <span class="tag">KiCad</span>
+            <span class="tag">Autodesk Fusion</span>
+            <span class="tag">Claude Code</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Contact ===== -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-label">Contact</div>
+        <h2 class="section-title">お気軽にご連絡ください</h2>
+      </div>
+      <p class="contact-sub reveal" data-delay="1">
+        ロボティクス・組み込み・自律走行に関するお話、開発のご相談など歓迎します。
+      </p>
+      <div class="contact-links">
+        <a class="contact-link reveal" data-delay="1" href="https://github.com/banbatakumi" target="_blank" rel="noopener">
+          <span class="ico">🐙</span>
+          <span class="label">GitHub</span>
+          <span class="handle">@banbatakumi</span>
+        </a>
+        <a class="contact-link reveal" data-delay="2" href="https://youtube.com/@bambi_rcj" target="_blank" rel="noopener">
+          <span class="ico">▶️</span>
+          <span class="label">YouTube</span>
+          <span class="handle">@bambi_rcj</span>
+        </a>
+        <a class="contact-link reveal" data-delay="3" href="mailto:banbatakumi@gmail.com">
+          <span class="ico">✉️</span>
+          <span class="label">Email</span>
+          <span class="handle">banbatakumi@gmail.com</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer>
+    <div class="container">
+      <p>© <span id="year"></span> 馬場 拓海 / Takumi Bamba — Built from scratch with <span class="mono">HTML · CSS · JS</span> 🤖</p>
+    </div>
+  </footer>
+
+  <script>
+    // 現在年
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // ナビバー: スクロールで影
+    const header = document.getElementById("header");
+    const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 20);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    // モバイルメニュー トグル
+    const navToggle = document.getElementById("navToggle");
+    const navLinks = document.getElementById("navLinks");
+    navToggle.addEventListener("click", () => {
+      navToggle.classList.toggle("open");
+      navLinks.classList.toggle("open");
+    });
+    navLinks.querySelectorAll("a").forEach((a) =>
+      a.addEventListener("click", () => {
+        navToggle.classList.remove("open");
+        navLinks.classList.remove("open");
+      })
+    );
+
+    // スクロールフェードイン
+    const reveals = document.querySelectorAll(".reveal");
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("visible");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+      );
+      reveals.forEach((el) => io.observe(el));
+    } else {
+      reveals.forEach((el) => el.classList.add("visible"));
+    }
+  </script>
+</body>
+</html>
